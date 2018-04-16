@@ -6,7 +6,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brighton Times</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="main.css">
+    <style type="text/css">
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.header__menu {
+  display: none;
+}
+
+.hero, .top-news, .scores, .weather, .recent-news {
+  order: 10;
+}
+      @media screen and (max-width: 549px) {
+  .header__logo {
+    height: 48px;
+    margin-right: 0.5em;
+  }
+  .header__title {
+    margin-left: 0;
+    font-size: 2em;
+    vertical-align: bottom; 
+  }
+  .nav {
+    z-index: 10;
+    background-color: #fff;
+    width: 300px;
+    position: absolute;
+    /* This trasform moves the drawer off canvas. */
+    -webkit-transform: translate(-300px, 0);
+    transform: translate(-300px, 0);
+    /* Optionally, we animate the drawer. */
+    transition: transform 0.3s ease;
+  }
+  .nav.open {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  .nav__item {
+    display: list-item;
+    border-bottom: 1px solid #E0E0E0;
+    width: 100%;
+    text-align: left;
+  }
+  .header__menu {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    padding: 1em;
+  }
+  .header__menu svg {
+    width: 32px;
+    fill: #E0E0E0;
+  }
+}
+      @media screen and (max-width: 1199px) {
+        .hero {order: 0;width: 100%;}
+        .top-news{order: 1;width: 100%; height: 50%;}
+        .scores{order: 2;width: 100%;}
+        .weather{order: 3;width: 100%;}
+        .recent-news{order: 4;width: 100%;} 
+      }
+
+    @media screen and (min-width: 1200px) {
+        .hero {order: -1;width: 100%;}
+        .first{order: 0; width: 100%}
+        .top-news{order: 1;width: 40%;}
+        .scores{order: 2;width: 60%;}
+        .weather{order: 3;width: 100%;}
+        .recent-news{order: 4;width: 100%;}
+}
+    </style>
   </head>
   <body>
 
@@ -16,9 +90,15 @@
         <h1 class="header__title">
           The Brighton Times
         </h1>
+        <a id="menu" class="header__menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
+          </svg>
+        </a>
       </div>
     </header>
 
+    <!-- <i class="fas fa-bars"></i> -->
     <nav id="drawer" class="nav">
       <ul class="nav__list">
         <li class="nav__item"><a href="#">News</a></li>
@@ -30,6 +110,7 @@
 
     <main>
       <section class="content">
+
         <section class="hero">
           <article class="description">
             <h2>Absolutely astonishing breaking news!</h2>
@@ -37,6 +118,7 @@
           </article>
         </section>
 
+        <div class="first">
         <section class="news top-news">
           <h2 class="news__title">Top news <a href="#" class="news__more">+ more</a></h2>
           <ul>
@@ -54,7 +136,6 @@
             </li>
           </ul>
         </section>
-
         <section class="scores">
           <table class="scores__table">
             <thead>
@@ -105,8 +186,9 @@
             </tbody>
           </table>
         </section>
-
-        <section class="weather">
+      </div>
+        
+      <section class="weather">
           <span class="weather__location">Brighton, UK</span>
           <span class="weather__desc">Sunny</span>
           <span class="weather__today">
@@ -178,5 +260,22 @@
         </ul>
       </footer>
     </main>
+    <script>
+      /*
+       * Open the drawer when the menu ison is clicked.
+       */
+      var menu = document.querySelector('#menu');
+      var main = document.querySelector('main');
+      var drawer = document.querySelector('.nav');
+
+      menu.addEventListener('click', function(e) {
+        drawer.classList.toggle('open');
+        e.stopPropagation();
+      });
+      main.addEventListener('click', function() {
+        drawer.classList.remove('open');
+      });
+
+    </script>
   </body>
 </html>
